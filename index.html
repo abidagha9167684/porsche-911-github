@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#07070a">
+  <title>911 — Feel the Engine</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div id="loader"><div class="loader-inner"><span>911</span><i></i></div></div>
+
+  <header class="nav">
+    <div class="logo">911<small>CARRERA</small></div>
+    <nav>
+      <a href="#hero">Models</a>
+      <a href="#drive">Showroom</a>
+      <a href="#cards">Explore</a>
+      <a href="#footer">Contact</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Open the menu" aria-expanded="false"><span></span></button>
+  </header>
+
+  <main class="hero" id="hero">
+    <div class="big-title" aria-hidden="true">911</div>
+    <canvas id="scene"></canvas>
+
+    <div class="hero-text">
+      <p class="eyebrow">The icon. Since 1963.</p>
+      <h1>Pure sound.<br>Pure speed.</h1>
+    </div>
+
+    <div class="colors" id="colors" title="Paint color">
+      <button data-color="#c1121f" class="active" style="--c:#c1121f"></button>
+      <button data-color="#e9e9ea" style="--c:#e9e9ea"></button>
+      <button data-color="#101114" style="--c:#101114"></button>
+      <button data-color="#1d4ed8" style="--c:#1d4ed8"></button>
+      <button data-color="#f5b301" style="--c:#f5b301"></button>
+    </div>
+
+    <div class="rpm" id="rpm">
+      <div class="rpm-bar"><div class="rpm-fill" id="rpmFill"></div></div>
+      <div class="rpm-text"><span id="rpmValue">0</span> RPM</div>
+    </div>
+
+    <div class="controls">
+      <button id="startBtn" class="btn btn-start">START ENGINE</button>
+      <button id="driftBtn" class="btn btn-drift">DRIFT</button>
+      <button id="raceBtn" class="btn btn-race">RACE</button>
+    </div>
+    <p class="hint">Drag to rotate &nbsp;·&nbsp; Ctrl + scroll to zoom &nbsp;·&nbsp; Keys: S start · D drift · R race &nbsp;·&nbsp; Scroll down ↓</p>
+  </main>
+
+  <section class="lights" id="drive">
+    <div class="lights-stage">
+      <div class="lights-frame">
+        <img class="lights-off" src="assets/front-off.jpg" alt="911 seen from the front, headlights off">
+        <img class="lights-on" src="assets/front-on.jpg" alt="" aria-hidden="true">
+      </div>
+      <div class="lights-shade"></div>
+      <div class="drive-label"><span>02</span><em>Studio</em></div>
+      <div class="lights-caption">
+        <h2><span class="t-off">Wait for it.</span><span class="t-on">Light up the night.</span></h2>
+        <p>Keep scrolling and watch the headlights wake up.</p>
+      </div>
+      <div class="lights-scroll">Scroll</div>
+    </div>
+  </section>
+
+  <section class="cards" id="cards">
+    <div class="cards-grid">
+
+      <article class="card card-emblem" style="--d:0s">
+        <div class="card-media">
+          <div class="emblem-glow"></div>
+          <svg class="emblem" viewBox="0 0 200 240" role="img" aria-label="911 emblem">
+            <defs>
+              <linearGradient id="egold" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#f7e6a8"/><stop offset=".5" stop-color="#c9973a"/><stop offset="1" stop-color="#7a5217"/>
+              </linearGradient>
+              <linearGradient id="eink" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#3a1010"/><stop offset="1" stop-color="#0d0404"/>
+              </linearGradient>
+              <filter id="ebump" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+                <feColorMatrix in="SourceGraphic" type="luminanceToAlpha" result="lum"/>
+                <feGaussianBlur in="lum" stdDeviation="1.6" result="blur"/>
+                <feSpecularLighting in="blur" surfaceScale="9" specularConstant="1.3" specularExponent="22" lighting-color="#fff4da" result="spec">
+                  <fePointLight id="emblemLight" x="60" y="60" z="80"/>
+                </feSpecularLighting>
+                <feComposite in="spec" in2="SourceAlpha" operator="in" result="specIn"/>
+                <feComposite in="SourceGraphic" in2="specIn" operator="arithmetic" k1="0" k2="1" k3="1" k4="0"/>
+              </filter>
+            </defs>
+            <g filter="url(#ebump)">
+              <g id="emblemOriginal">
+              <path d="M18 22H182V118C182 188 142 218 100 232C58 218 18 188 18 118Z" fill="url(#egold)"/>
+              <path d="M30 34H170V118C170 180 136 206 100 218C64 206 30 180 30 118Z" fill="url(#eink)"/>
+              <path d="M30 34H170V68H30Z" fill="#b3141a"/>
+              <text x="100" y="57" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="800" letter-spacing="6" fill="#f6e5ae">CARRERA</text>
+              <text x="100" y="146" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="66" font-weight="900" fill="url(#egold)">911</text>
+              <path d="M56 162H144" stroke="url(#egold)" stroke-width="2.5"/>
+              <text x="100" y="186" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" letter-spacing="5" fill="#dcb86a">SINCE 1963</text>
+              </g>
+              <image id="emblemLogo" x="12" y="12" width="176" height="216" preserveAspectRatio="xMidYMid meet" href="" style="display:none"/>
+            </g>
+          </svg>
+        </div>
+        <p class="card-cap"><i>›</i><span>Our emblem. Made to catch the light.</span></p>
+      </article>
+
+      <article class="card card-book" style="--d:.12s">
+        <button class="card-media" id="bookOpen" aria-label="Open the magazine">
+          <div class="mini-mag" id="miniMag"></div>
+          <span class="tap-hint">Click to open</span>
+        </button>
+        <p class="card-cap"><i>›</i><span>The 911 issue. Open it and flip through.</span></p>
+      </article>
+
+      <article class="card card-xray" style="--d:.24s">
+        <div class="card-media">
+          <canvas id="xrayCanvas"></canvas>
+          <span class="xray-hint" id="xrayHint">Hover to take it apart</span>
+        </div>
+        <p class="card-cap"><i>›</i><span>Inside the 911. Take it apart.</span></p>
+      </article>
+
+    </div>
+    <h2 class="cards-title">Explore</h2>
+  </section>
+
+  <section class="finder" id="finder">
+    <div class="finder-top">
+      <div class="finder-text">
+        <h2>Find your next 911.</h2>
+        <p>Finding the right car is easy. Enter your location and browse the best offers near you.</p>
+        <a class="btn-dark" href="#finder"><span>›</span> Find new and used cars</a>
+      </div>
+      <div class="finder-cars" id="finderCars">
+        <div class="fcar fcar-3"><img class="off" alt=""><img class="on" alt=""><img class="glow g1" alt=""><img class="glow g2" alt=""></div>
+        <div class="fcar fcar-2"><img class="off" alt=""><img class="on" alt=""><img class="glow g1" alt=""><img class="glow g2" alt=""></div>
+        <div class="fcar fcar-1"><img class="off" alt=""><img class="on" alt=""><img class="glow g1" alt=""><img class="glow g2" alt=""></div>
+        <span class="finder-hint">Hover to switch on the lights</span>
+      </div>
+    </div>
+    <div class="finder-bottom">
+      <h3>Exclusive accessories for your 911.</h3>
+      <p>Experience the diverse range of products, from original accessories to lifestyle collections.</p>
+    </div>
+  </section>
+
+  <section class="discover" id="discover">
+    <div class="dgrid dgrid-4">
+
+      <article class="dtile t-wheel" style="--d:0s">
+        <div class="dmedia" id="tWheel">
+          <div class="wheel-shadow"></div>
+          <img class="wheel-img" alt="">
+          <div class="wheel-speed"><b id="wheelKmh">0</b><span>km/h</span></div>
+          <span class="dhint">Hover to spin</span>
+        </div>
+        <p class="card-cap"><i>›</i><span>Wheels. Hover and let them spin.</span></p>
+      </article>
+
+      <article class="dtile t-paint" style="--d:.08s">
+        <div class="dmedia" id="tPaint">
+          <img class="paint-img" alt="">
+          <span class="dhint" id="paintHint">Move to mix · click to paint your 911</span>
+          <div class="paint-bar"><i id="paintDot"></i></div>
+        </div>
+        <p class="card-cap"><i>›</i><span>Paint to sample. Pick any colour.</span></p>
+      </article>
+
+      <article class="dtile t-rev" style="--d:.16s">
+        <button class="dmedia" id="tRev" aria-label="Rev the engine">
+          <svg viewBox="0 0 200 150" aria-hidden="true">
+            <g id="revTicks"></g>
+            <line id="revNeedle" x1="100" y1="92" x2="100" y2="36" stroke="#ff2d2d" stroke-width="2.5" stroke-linecap="round" transform="rotate(-120 100 92)"/>
+            <circle cx="100" cy="92" r="5" fill="#e9e9ea"/>
+            <text id="revNum" x="100" y="124" text-anchor="middle" font-size="15" font-weight="800" fill="#fff" font-family="Segoe UI, Arial, sans-serif">0</text>
+            <text x="100" y="134" text-anchor="middle" font-size="5.5" letter-spacing="2" fill="#8a8c92" font-family="Segoe UI, Arial, sans-serif">RPM</text>
+          </svg>
+          <span class="dhint">Click to rev the engine</span>
+        </button>
+        <p class="card-cap"><i>›</i><span>The sound. Press and listen.</span></p>
+      </article>
+
+      <article class="dtile t-spot" style="--d:.24s">
+        <div class="dmedia" id="tSpot">
+          <img class="spot-img spot-dim" alt="">
+          <img class="spot-img spot-lit" alt="">
+          <div class="spot-glow"></div>
+          <span class="dhint">Move your light</span>
+        </div>
+        <p class="card-cap"><i>›</i><span>Night drive. Find the car in the dark.</span></p>
+      </article>
+
+    </div>
+
+    <h2 class="cards-title discover-title">Discover</h2>
+
+    <div class="dgrid dgrid-3">
+
+      <article class="dtile t-perf" style="--d:0s">
+        <div class="dmedia" id="tPerf">
+          <img class="perf-img" alt="">
+          <span class="perf-tag">Performance</span>
+          <div class="perf-stats">
+            <div><b><span class="perf-num" data-to="4.1" data-from="9.9" data-dec="1">4.1</span><em>s</em></b><i style="--w:86%"></i><small>0 – 100 km/h</small></div>
+            <div><b><span class="perf-num" data-to="294">294</span><em>km/h</em></b><i style="--w:92%"></i><small>Top speed</small></div>
+            <div><b><span class="perf-num" data-to="394">394</span><em>PS</em></b><i style="--w:74%"></i><small>Power</small></div>
+          </div>
+          <span class="perf-note">Example figures. Check the official data for your model.</span>
+        </div>
+        <p class="card-cap"><i>›</i><span>Performance. The numbers behind the feeling.</span></p>
+      </article>
+
+      <article class="dtile t-news" style="--d:.1s">
+        <div class="dmedia" id="tNews">
+          <img class="news-img" alt="">
+          <form id="newsForm" novalidate>
+            <b>Stay close to the 911.</b>
+            <div class="news-row">
+              <input type="email" placeholder="Your email address" aria-label="Email address" autocomplete="email">
+              <button type="submit">Subscribe</button>
+            </div>
+            <small>Demo form: nothing is sent or stored.</small>
+          </form>
+          <div class="news-done">
+            <div class="tick"></div>
+            <b>You're on the list.</b>
+            <small>Demo only: no email was sent.</small>
+          </div>
+        </div>
+        <p class="card-cap"><i>›</i><span>Newsletter. Be the first to know.</span></p>
+      </article>
+
+      <article class="dtile t-her" style="--d:.2s">
+        <div class="dmedia" id="tHer">
+          <div class="her-year" id="herYear">1963</div>
+          <img class="her-img" alt="">
+          <div class="her-info"><b id="herCode"></b><span id="herText"></span></div>
+          <input id="herRange" type="range" min="0" max="7" step="1" value="0" aria-label="911 generation">
+        </div>
+        <p class="card-cap"><i>›</i><span>Heritage. Drag through eight generations.</span></p>
+      </article>
+
+    </div>
+  </section>
+
+  <footer class="footer" id="footer">
+    <div class="footer-cols">
+      <nav aria-label="Buying advice">
+        <h4>Buying advice</h4>
+        <a href="#discover">Configure your 911</a>
+        <a href="#finder">New cars, available now</a>
+        <a href="#drive">Compare models</a>
+        <a href="#finder">Search for used cars</a>
+        <a href="#finder">Find a dealer</a>
+      </nav>
+      <nav aria-label="Online services">
+        <h4>Online services</h4>
+        <a href="#">My account</a>
+        <a href="#">Ask us</a>
+        <a href="#">Connected services</a>
+        <a href="#discover">Subscribe to the newsletter</a>
+        <a href="#">Online shop</a>
+      </nav>
+      <nav aria-label="Behind the scenes">
+        <h4>Behind the scenes</h4>
+        <a href="#discover">Performance</a>
+        <a href="#discover">Heritage</a>
+        <a href="#cards">The magazine</a>
+        <a href="#cards">Inside the 911</a>
+      </nav>
+      <nav aria-label="About">
+        <h4>About</h4>
+        <a href="#hero">The 911 at a glance</a>
+        <a href="#">Careers</a>
+        <a href="#">Compliance and integrity</a>
+        <a href="#">Contact</a>
+      </nav>
+    </div>
+
+    <div class="footer-dark">
+      <div class="footer-light" aria-hidden="true"></div>
+      <div class="footer-word" aria-hidden="true">911</div>
+      <div class="footer-row">
+        <div class="logo">911<small>CARRERA</small></div>
+        <p>Pure sound. Pure speed.</p>
+        <a class="to-top" href="#hero" aria-label="Back to top"><span>Back to top</span><i></i></a>
+      </div>
+      <div class="footer-legal">
+        <span>© 2026 911 Carrera showcase</span>
+        <span>Independent demo project. Not affiliated with or endorsed by Porsche AG.</span>
+        <span><a href="#">Imprint</a> · <a href="#">Privacy</a> · <a href="#">Cookies</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="main.js"></script>
+  <script type="module" src="demo.js"></script>
+</body>
+</html>
